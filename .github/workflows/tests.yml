@@ -151,6 +151,12 @@ jobs:
           chmod 777 artifacts
           docker-compose run --rm tests
 
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: artifacts/**/*.xml
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -188,6 +194,12 @@ jobs:
           chmod 777 artifacts
           docker-compose run --rm tests
 
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: artifacts/**/*.xml
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -215,3 +227,9 @@ jobs:
           mkdir artifacts
           chmod 777 artifacts
           docker-compose run --rm tests
+          
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: artifacts/**/*.xml
