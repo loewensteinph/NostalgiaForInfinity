@@ -14,31 +14,8 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.7
-    - id: changed-files
-      name: Get Changed Files
-      uses: dorny/paths-filter@v2
-      with:
-        token: ${{ github.token }}
-        list-files: shell
-        filters: |
-          repo:
-            - added|modified:
-              - '**'
     - name: Set Cache Key
       run: echo "PY=$(python --version --version | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
-    - uses: actions/cache@v2
-      with:
-        path: ~/.cache/pre-commit
-        key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
-    - name: Check ALL Files On Branch
-      uses: pre-commit/action@v2.0.0
-      if: github.event_name != 'pull_request'
-    - name: Check Changed Files On PR
-      uses: pre-commit/action@v2.0.0
-      if: github.event_name == 'pull_request'
-      with:
-        extra_args: --files ${{ steps.changed-files.outputs.repo_files }}
-
 
   Binance-Backtests:
     strategy:
